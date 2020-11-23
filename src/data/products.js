@@ -1,5 +1,18 @@
+import Vue from 'vue'
+import axios from 'axios'
+import VueAxios from 'vue-axios'
+Vue.use(VueAxios, axios)
+var d = [];
+Vue.axios.get("http://localhost:3000/get").then((response) => {
+        console.log(response.data)  
+        d = response.data
+    })
+
+        
+
 export default [
-	{
+    d
+	/*{
         "id": 1,
 		"item": "DELUXE COOKED HAM",
         "price": 5.15,
@@ -16,5 +29,5 @@ export default [
 		"item": "DELUXE LOW-SODIUM WHOLE HAM",
         "price": 12.30,
         "src": "https://st3.depositphotos.com/12902820/15762/i/1600/depositphotos_157628578-stock-photo-plate-mexican-nacho-chips-topped.jpg"
-	}
+	}*/
 ]

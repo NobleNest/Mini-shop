@@ -8,6 +8,10 @@ import Cart from './components/Cart.vue'
 
 import store from './store.js'
 
+import axios from 'axios'
+import VueAxios from 'vue-axios'
+Vue.use(VueAxios, axios)
+
 const routes = [
     { path: '/', component: ProductsList },
     { path: '/product/:id', component: ProductInfo },

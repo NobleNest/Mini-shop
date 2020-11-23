@@ -9,24 +9,25 @@
                 </router-link>
             </button> 
         </form>
-        <div class="product" v-for="(item) in filteredItems" v-bind:key="item.id">
-            <div class="product-image">
-                <img v-bind:src="item.src">
-            </div>
+        <div class="product" v-for="(item) in filteredItems" v-bind:key="item._id">
             <div>
                 <h4 class="product-title">
-                    <router-link v-bind:to="'/product/' + item.id">
+                    <router-link v-bind:to="'/product/' + item._id">
                         {{ item.item }}
                     </router-link>
                 </h4>
                 <label>{{item.price}}</label>
-                <button v-on:click="addItem(item.id - 1)" class="btn">Add to cart</button>   
+                <button v-on:click="addItem(item._id)" class="btn">Add to cart</button>   
             </div>
         </div>
     </div>
 </template>
 <script>
-    import products from '../data/products.js'
+    //import products from '../data/products.js'
+    import Vue from 'vue'
+import axios from 'axios'
+import VueAxios from 'vue-axios'
+Vue.use(VueAxios, axios)
 
     export default {
         data: function () {
@@ -37,11 +38,20 @@
             };
         },
         mounted: function(){
-            this.items = products;
+            /*alert(products)
+            this.items = products;*/
+            Vue.axios.get("http://localhost:3000/get").then((response) => {
+                console.log(response.data)  
+                this.items = response.data
+            })
         },
         methods:{
             addItem: function(index){
-                this.$store.commit('setCart', this.items[index])
+                for(let i = 0; i < this.items.length; i++){
+                    if(this.items[i]._id == index){
+                        this.$store.commit('setCart', this.items[i])
+                    }
+                }
             },
         },
         computed: {
